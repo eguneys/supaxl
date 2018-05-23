@@ -113,8 +113,25 @@ export function renderWrap(ctrl, app, textures) {
       sprite.position.set(pos[0] * 32,
                           pos[1] * 32);
 
+      let tween = ctrl.data.tweens[tileKey],
+          viewTween = ctrl.data.viewTween;
+
+      if (tween) {
+        container.setChildIndex(sprite, container.children.length - 1);
+
+        sprite.position.set(
+          sprite.position.x + tween[1][0],
+          sprite.position.y + tween[1][1]);
+      }
+
+      if (viewTween) {
+        sprite.position.set(
+          sprite.position.x + viewTween[1][0],
+          sprite.position.y + viewTween[1][1]);
+      }
+
       sprite.update();
-    });    
+    });
   
   };
 }

@@ -423,7 +423,20 @@ function viewportCenter(data, morphyPos, prePos) {
 
 function murphyCenter(data, morphyPos, prePos) {
   const { world, screen } = data.measure;
-  data.measure.offset = bounds(world, screen, morphyPos);
+
+  let offset = bounds(world, screen, morphyPos),
+      preOffset = data.measure.offset;
+  
+  data.measure.offset = offset;
+
+  if (preOffset) {
+    let diff = [(offset[0] - preOffset[0]) * 32,
+                (offset[1] - preOffset[1]) * 32];
+    
+    data.viewTween = [diff, diff];
+    data.viewTween.start = data.lastUpdateTime;
+  }
+
 }
 
 /*
