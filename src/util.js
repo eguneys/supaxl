@@ -25,9 +25,7 @@ const allPos = (function(width, height) {
     }
   }
   return ps;
-})(Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT);
-
-
+})(Constants.RENDER_WIDTH, Constants.RENDER_HEIGHT);
 
 export {
   padZero,

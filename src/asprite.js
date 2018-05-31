@@ -47,5 +47,7 @@ class AnimatedSprite extends PIXI.Sprite {
     }
 
     this._textures = textures;
+
+    this.lastTime = Date.now();
   }
 }

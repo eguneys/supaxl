@@ -16,7 +16,15 @@ export function bounds(world, screen, pos) {
                         between(pos[i] - halfScreen[i],
                                 0, rightEdge[i]));
 
-  return offset;
+  let edgeOffset = idxs.map(i =>
+                            (pos[i] <= halfScreen[i] - 1)?
+                            1:
+                            (pos[i] > rightEdge[i] + halfScreen[i])?-1:0);
+
+  return {
+    offset,
+    edgeOffset
+  };
 }
 
 function testBounds() {

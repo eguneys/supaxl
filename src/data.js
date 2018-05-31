@@ -40,7 +40,7 @@ export default function(cfg) {
     viewWidth: VIEW_WIDTH * TILE_SIZE,
     measure: {
       world: [MAP_WIDTH, MAP_HEIGHT],
-      screen: [VIEW_WIDTH, VIEW_HEIGHT],
+      screen: [RENDER_WIDTH, RENDER_HEIGHT],
       offset: [0, 0]
     },
     tileSize: TILE_SIZE,

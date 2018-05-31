@@ -74,6 +74,7 @@ export function renderWrap(ctrl, app, textures) {
   const { tiles, measure } =  ctrl.data;
 
   const sprites = [];
+  const lastByTile = {};
 
   allPos.forEach((pos) => {
     let offset = measure.offset,
@@ -91,15 +92,32 @@ export function renderWrap(ctrl, app, textures) {
     sprite.position.set(pos[0] * 32,
                         pos[1] * 32);
 
+    lastByTile[tileKey] = sprite.lastTime;
+
     container.addChild(sprite);
 
   });
 
   return () => {
+    let { offset, edgeOffset } = measure;
+
+    if (edgeOffset) {
+      container.position.set(-32 + edgeOffset[0] * 32,
+                             -32 + edgeOffset[1] * 32);
+    }
+
+    let viewTween = ctrl.data.viewTween,
+        edgeTween = ctrl.data.edgeTween;
+
+    if (edgeTween) {
+      container.position.set(
+        container.position.x - edgeTween[1][0],
+        container.position.y - edgeTween[1][1]);
+    }
+
 
     allPos.forEach((pos) => {
-      let offset = measure.offset,
-          tilePos = [pos[0] + offset[0],
+      let tilePos = [pos[0] + offset[0],
                      pos[1] + offset[1]];
 
       let tileKey = pos2key(tilePos);
@@ -113,8 +131,7 @@ export function renderWrap(ctrl, app, textures) {
       sprite.position.set(pos[0] * 32,
                           pos[1] * 32);
 
-      let tween = ctrl.data.tweens[tileKey],
-          viewTween = ctrl.data.viewTween;
+      let tween = ctrl.data.tweens[tileKey];
 
       if (tween) {
         container.setChildIndex(sprite, container.children.length - 1);
@@ -130,7 +147,12 @@ export function renderWrap(ctrl, app, textures) {
           sprite.position.y + viewTween[1][1]);
       }
 
+      if (lastByTile[tileKey]) {
+        sprite.lastTime = lastByTile[tileKey];
+      }
+
       sprite.update();
+      lastByTile[tileKey] = sprite.lastTime;
     });
   
   };
