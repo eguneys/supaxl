@@ -3,25 +3,60 @@ import { asprite } from './asprite' ;
 import { pos2key, allPos } from './util';
 
 
-function tDuration(tile) {
-  return 1000;
-}
-
 function tFrame(textures, tile) {
   let frame = frames[tile.role];
 
   if (!frame) {
-    frame = textures['empty'];
+    return 'empty';
   } else {
-    frame = textures[frame(tile)];
+    if (typeof frame === "string") {
+      return frame;
+    } else {
+      return frame(tile);
+    }
   }
-
-  if (!frame) {
-    throw 'no frame for tile ' + tile;
-  }
-
-  return frame;
 }
+
+function tTextures(textures, tile) {
+  let frame = tFrame(textures, tile);
+
+  let texture = textures[frame];
+  let duration = durations[frame] || 1000;
+
+  if (!texture) {
+    throw 'no texture for tile ' + tile;
+  }
+
+  return {
+    texture,
+    duration
+  };
+}
+
+const durations = {
+  "sci-up": 240,
+  "sci-down": 240,
+  "sci-left": 240,
+  "sci-right": 240,
+  "zonk-roll-right": 200,
+  "zonk-roll-left": 200,
+  "info-roll-right": 600,
+  "info-roll-left": 600,
+  infoVanish: 240,
+  infoExplode: 200,
+  explode: 200,
+  diskVanish: 200,
+  redTerminalOn: 1000,
+  greenTerminalOn: 1000,
+  baseVanish: 1000,
+  baseBug: 1000,
+  electron: 240,
+  murphyYawn: 1000,
+  murphyYawn2: 1000,
+  "murphy-right": 240,
+  "murphy-left": 240,
+  "murphyVanish": 1000
+};
 
 const frames = {
     SNIKSNAK: (tile) => {
@@ -38,7 +73,7 @@ const frames = {
   },
   INFOTRON: (tile) => {
     if (tile.rolling > 0) {
-      const hanged = tile.rolling === 3?'hanged ':'';
+      const hanged = tile.rolling === 3?'hanged-':'';
       return hanged + ['info', 'roll', tile.facing].join('-');
     }
     if (tile.vanishing > 0) {
@@ -64,7 +99,26 @@ const frames = {
       return ['murphy', 'snap', tile.facing].join('-');
     }
     return 'murphy';
-  }
+  },
+  EMPTY: 'empty',
+  EXPLOSION: 'explosion',
+  FLOPPY_RED: 'reddisk',
+  TERMINAL_RED: 'redterminal',
+  TERMINAL_GREEN: 'greenterminal',
+  CHIP: 'chip',
+  CHIP_TOP: 'chipTop',
+  CHIP_BOTTOM: 'chipBottom',
+  CHIP_LEFT: 'chipLeft',
+  CHIP_RIGHT: 'chipRight',
+  HARDWARE1: 'hardware1',
+  ELECTRON: 'electron',
+  PORT_ALL: 'portAll',
+  PORT_UP: 'portUp',
+  PORT_DOWN: 'portDown',
+  PORT_LEFT: 'portLeft',
+  PORT_RIGHT: 'portRight',
+  PORT_HORIZONTAL: 'portHorizontal',
+  PORT_VERTICAL: 'portVertical'
 };
 
 export function renderWrap(ctrl, app, textures) {
@@ -84,8 +138,9 @@ export function renderWrap(ctrl, app, textures) {
     let tileKey = pos2key(tilePos);
 
     let tile = tiles[tileKey],
-        sprite = asprite(tFrame(textures, tile),
-                         tDuration(tile));
+        { texture,
+          duration } = tTextures(textures, tile),
+        sprite = asprite(texture, duration);
 
     sprites[pos2key(pos)] = sprite;
 
@@ -125,13 +180,20 @@ export function renderWrap(ctrl, app, textures) {
       let tile = tiles[tileKey],
           sprite = sprites[pos2key(pos)];
 
-      sprite.setTextures(tFrame(textures, tile),
-                         tDuration(tile));
+      let { texture,
+            duration } = tTextures(textures, tile);
+
+      let newTexture =
+      sprite.setTextures(texture, duration, lastByTile[tileKey]);
 
       sprite.position.set(pos[0] * 32,
                           pos[1] * 32);
 
       let tween = ctrl.data.tweens[tileKey];
+
+      if (tile.porting) {
+        container.setChildIndex(sprite, container.children.length - 1);
+      }
 
       if (tween) {
         container.setChildIndex(sprite, container.children.length - 1);
@@ -147,12 +209,10 @@ export function renderWrap(ctrl, app, textures) {
           sprite.position.y + viewTween[1][1]);
       }
 
-      if (lastByTile[tileKey]) {
-        sprite.lastTime = lastByTile[tileKey];
-      }
-
       sprite.update();
-      lastByTile[tileKey] = sprite.lastTime;
+      if (newTexture) {
+        lastByTile[tileKey] = sprite.lastTime;
+      }
     });
   
   };

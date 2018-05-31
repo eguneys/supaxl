@@ -41,13 +41,16 @@ class AnimatedSprite extends PIXI.Sprite {
     this._texture = this._textures[this.frame];
   }
 
-  setTextures(textures, duration) {
+  setTextures(textures, duration, lastTime) {
     if (this._textures[0] === textures[0]) {
-      return;
+      return false;
     }
 
     this._textures = textures;
 
-    this.lastTime = Date.now();
+    this.duration = duration;
+
+    this.lastTime = lastTime || Date.now();
+    return true;
   }
 }

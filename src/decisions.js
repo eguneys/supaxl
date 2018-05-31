@@ -428,7 +428,6 @@ function murphyCenter(data, morphyPos, prePos) {
       preOffset = data.measure.offset,
       preEdgeOffset = data.measure.edgeOffset;
   
-  console.log(offset, edgeOffset);
   data.measure.offset = offset;
   data.measure.edgeOffset = edgeOffset;
 

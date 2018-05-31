@@ -15,6 +15,9 @@ export default function app(element) {
 
   PIXI.loader
     .add("images/Supaplex32.png")
+    .add("images/SupaplexSprites.png")
+    .add("images/SupaplexBorder.png")
+    .add("images/hud.png")
     .add("levels", "build/levels.json")
     .load(() => {
       const ctrl = new controller(
