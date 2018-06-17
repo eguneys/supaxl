@@ -6,8 +6,8 @@ const MAP_HEIGHT = 24 - 2;
 const VIEW_WIDTH = 10 * 2;
 const VIEW_HEIGHT = 6 * 2;
 
-const RENDER_WIDTH = VIEW_WIDTH + 3;
-const RENDER_HEIGHT = VIEW_HEIGHT + 3;
+const RENDER_WIDTH = VIEW_WIDTH + 5;
+const RENDER_HEIGHT = VIEW_HEIGHT + 5;
 
 const UPDATE_DURATION = 100;
 

@@ -8,8 +8,8 @@ import keyboard from './keyboard';
 export default function app(element) {
 
   const app = new PIXI.Application({
-    width: 32 * (20 + 1 + 0),
-    height: 32 * (12 + 1 + 0)
+    width: 32 * (20 + 1 + 5),
+    height: 32 * (12 + 1 + 5)
   });
 
 

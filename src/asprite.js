@@ -3,12 +3,20 @@ import * as PIXI from 'pixi.js';
 export function pContainer() {
 
   return new PIXI.particles.ParticleContainer(1000, {
-    vertices: false,
-    position: false,
-    uvs: false,
+    vertices: true,
+    position: true,
+    uvs: true,
     tint: true
   });
   
+}
+
+export function dContainer() {
+  return new PIXI.Container();
+}
+
+export function sprite(texture) {
+  return new PIXI.Sprite(texture);
 }
 
 export function asprite(textures, duration) {

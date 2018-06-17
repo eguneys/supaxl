@@ -2,6 +2,59 @@ import * as PIXI from 'pixi.js';
 
 export function sprites() {
 
+  const tss = {};
+
+  tiles(tss);
+  borders(tss);
+
+  return tss;
+}
+
+function borders(tss) {
+  const baseTexture = PIXI.utils.TextureCache['images/SupaplexBorder.png'];
+
+  let rect = new PIXI.Rectangle(0, 0, 16, 16);
+  let texture = new PIXI.Texture(baseTexture);
+  texture.frame = rect;
+  tss['borderTopLeft'] = texture;
+
+  rect = new PIXI.Rectangle(0, 16, 16, 16);
+  texture = new PIXI.Texture(baseTexture);
+  texture.frame = rect;
+  tss['borderLeft'] = texture;
+
+  rect = new PIXI.Rectangle(0, 16 * 2, 16, 16);
+  texture = new PIXI.Texture(baseTexture);
+  texture.frame = rect;
+  tss['borderBottomLeft'] = texture;
+
+  rect = new PIXI.Rectangle(16 * 2, 0, 16, 16);
+  texture = new PIXI.Texture(baseTexture);
+  texture.frame = rect;
+  tss['borderTopRight'] = texture;
+
+  rect = new PIXI.Rectangle(16 * 2, 16, 16, 16);
+  texture = new PIXI.Texture(baseTexture);
+  texture.frame = rect;
+  tss['borderRight'] = texture;
+
+  rect = new PIXI.Rectangle(16 * 2, 16 * 2, 16, 16);
+  texture = new PIXI.Texture(baseTexture);
+  texture.frame = rect;
+  tss['borderBottomRight'] = texture;
+
+  rect = new PIXI.Rectangle(16 * 1, 0, 16, 16);
+  texture = new PIXI.Texture(baseTexture);
+  texture.frame = rect;
+  tss['borderTop'] = texture;
+
+  rect = new PIXI.Rectangle(16 * 1, 16 * 2, 16, 16);
+  texture = new PIXI.Texture(baseTexture);
+  texture.frame = rect;
+  tss['borderBottom'] = texture;
+}
+
+function tiles (tss) {
   const frameIs = [0, 1, 2, 3, 4, 5, 6, 7];
 
   
@@ -106,8 +159,6 @@ export function sprites() {
   ];
 
   const baseTexture = PIXI.utils.TextureCache['images/Supaplex32.png'];
-
-  const tss = {};
 
   for (var col = 0; col < frames.length; col++) {
     var obj = frames[col];

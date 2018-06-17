@@ -1,5 +1,4 @@
-import { pContainer } from './asprite';
-import { asprite } from './asprite' ;
+import { dContainer, pContainer, asprite, sprite } from './asprite';
 import { key2pos, pos2key, allPos } from './util';
 
 
@@ -142,9 +141,16 @@ const frames = {
 export function renderWrap(ctrl, app, textures) {
   const container = pContainer();
   app.stage.addChild(container);
+  const borderContainer = bContainer(textures);
+  app.stage.addChild(borderContainer);
+
+
 
   const portMurphy = asprite(textures['murphy-left']);
   container.addChild(portMurphy);
+
+
+  borderContainer.position.set(-16, -16);
 
   const { tiles, measure } =  ctrl.data;
 
@@ -174,12 +180,16 @@ export function renderWrap(ctrl, app, textures) {
 
   });
 
+  let cOffset = -64;
+  // 
+  cOffset = 0;
+
   return () => {
     let { offset, edgeOffset } = measure;
 
     if (edgeOffset) {
-      container.position.set(-32 + edgeOffset[0] * 32,
-                             -32 + edgeOffset[1] * 32);
+      container.position.set(cOffset + edgeOffset[0] * 32,
+                             cOffset + edgeOffset[1] * 32);
     }
 
     let viewTween = ctrl.data.viewTween,
@@ -265,3 +275,47 @@ export function renderWrap(ctrl, app, textures) {
   
   };
 }
+
+function bContainer(textures) {
+  const container = dContainer();
+
+  let borderLeft = sprite(textures['borderLeft']),
+      borderRight = sprite(textures['borderRight']),
+      borderTop = sprite(textures['borderTop']),
+      borderBottom = sprite(textures['borderBottom']),
+      borderTopLeft = sprite(textures['borderTopLeft']),
+      borderTopRight = sprite(textures['borderTopRight']),
+      borderBottomLeft = sprite(textures['borderBottomLeft']),
+      borderBottomRight = sprite(textures['borderBottomRight']);
+
+  let tileSize = 2,
+      tileHeight = 32 * tileSize;
+  
+
+  borderLeft.height = tileHeight;
+  borderRight.height = tileHeight;
+  borderTop.width = tileHeight;
+  borderBottom.width = tileHeight;
+
+  borderLeft.position.set(0, 16);
+  borderRight.position.set(16 + tileHeight, 16);
+  borderTop.position.set(16, 0);
+  borderBottom.position.set(16, 16 + tileHeight);
+  borderTopLeft.position.set(0, 0);
+  borderTopRight.position.set(16 + tileHeight, 0);
+  borderBottomLeft.position.set(0, 16 + tileHeight);
+  borderBottomRight.position.set(16 + tileHeight, 16 + tileHeight);
+
+
+  container.addChild(borderLeft);
+  container.addChild(borderRight);
+  container.addChild(borderTop);
+  container.addChild(borderBottom);
+  container.addChild(borderTopLeft);
+  container.addChild(borderTopRight);
+  container.addChild(borderBottomLeft);
+  container.addChild(borderBottomRight);
+
+  return container;
+}
+
