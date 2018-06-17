@@ -3,9 +3,10 @@ import * as PIXI from 'pixi.js';
 export function pContainer() {
 
   return new PIXI.particles.ParticleContainer(1000, {
-    vertices: true,
-    position: true,
-    uvs: true,
+    vertices: false,
+    position: false,
+    uvs: false,
+    tint: true
   });
   
 }

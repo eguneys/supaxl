@@ -1,13 +1,13 @@
 import { pContainer } from './asprite';
 import { asprite } from './asprite' ;
-import { pos2key, allPos } from './util';
+import { key2pos, pos2key, allPos } from './util';
 
 
 function tFrame(textures, tile) {
   let frame = frames[tile.role];
 
   if (!frame) {
-    return 'empty';
+    return 'reddisk';
   } else {
     if (typeof frame === "string") {
       return frame;
@@ -125,6 +125,9 @@ export function renderWrap(ctrl, app, textures) {
   const container = pContainer();
   app.stage.addChild(container);
 
+  const portMurphy = asprite(textures['murphy-left']);
+  container.addChild(portMurphy);
+
   const { tiles, measure } =  ctrl.data;
 
   const sprites = [];
@@ -171,6 +174,10 @@ export function renderWrap(ctrl, app, textures) {
     }
 
 
+    {
+      portMurphy.alpha = 0;
+    }
+
     allPos.forEach((pos) => {
       let tilePos = [pos[0] + offset[0],
                      pos[1] + offset[1]];
@@ -191,16 +198,39 @@ export function renderWrap(ctrl, app, textures) {
 
       let tween = ctrl.data.tweens[tileKey];
 
-      if (tile.porting) {
-        container.setChildIndex(sprite, container.children.length - 1);
-      }
-
       if (tween) {
-        container.setChildIndex(sprite, container.children.length - 1);
-
         sprite.position.set(
           sprite.position.x + tween[1][0],
           sprite.position.y + tween[1][1]);
+      }
+
+      if (tile.isTrail) {
+        container.setChildIndex(sprite, 0);
+      }
+
+      if (tile.porting) {
+        // workaround to set z index
+        container.setChildIndex(sprite, container.children.length - 1);
+      let { texture,
+            duration } = tTextures(textures, tile.portTile);
+
+        portMurphy.setTextures(texture, duration);
+
+        tween = ctrl.data.tweens['port' + tile.key];
+        let tweenPos = tween?[tween[1][0], tween[1][1]]:[0,0];
+
+        if (viewTween) {
+          tweenPos[0] += viewTween[1][0];
+          tweenPos[1] += viewTween[1][1];
+        }
+
+        portMurphy.position.set(
+          pos[0] * 32 + tweenPos[0],
+          pos[1] * 32 + tweenPos[1]);
+
+        portMurphy.update();
+
+        portMurphy.alpha = 1;
       }
 
       if (viewTween) {
