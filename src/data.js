@@ -25,7 +25,7 @@ export {
 export default function(cfg) {
   var defaults = {
     // MENU
-    selectedLevel: 1,
+    selectedLevel: 39,
     // GAME
     updateDuration: UPDATE_DURATION,
     lastUpdateTime: 0,

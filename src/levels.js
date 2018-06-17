@@ -4,48 +4,46 @@ import * as util from './util';
 const { MAP_HEIGHT, MAP_WIDTH } = Constants;
 
 const RoleCode = {
-  0: 'EMPTY',
-  1: 'ZONK',
-  2: 'BASE',
-  3: 'MURPHY',
-  4: 'INFOTRON',
-  5: 'CHIP',
-  6: 'WALL',
-  7: 'EXIT',
-  8: 'FLOPPY_ORANGE',
-  9: 'PORT_RIGHT',
-  10: 'PORT_DOWN',
-  11: 'PORT_LEFT',
-  12: 'PORT_UP',
-  13: 'GPORT_RIGHT',
-  14: 'GPORT_DOWN',
-  15: 'GPORT_LEFT',
-  16: 'GPORT_UP',
-  17: 'SNIKSNAK',
-  18: 'FLOPPY_YELLOW',
-  19: 'TERMINAL',
-  20: 'FLOPPY_RED',
-  21: 'PORT_VERTICAL',
-  22: 'PORT_HORIZONTAL',
-  23: 'PORT_ALL',
-  24: 'ELECTRON',
-  25: 'BUG',
-  26: 'CHIP_LEFT',
-  27: 'CHIP_RIGHT',
-  28: 'HARDWARE1',
-  29: 'HARDWARE2',
-  30: 'HARDWARE3',
-  31: 'HARDWARE4',
-  32: 'HARDWARE5',
-  33: 'HARDWARE6',
-  34: 'HARDWARE7',
-  35: 'HARDWARE8',
-  36: 'HARDWARE9',
-  37: 'HARDWARE10',
-  38: 'HARDWARE11',
-  39: 'HARDWARE12',
-  40: 'CHIP_TOP',
-  41: 'CHIP_BOTTOM'
+  0x00: 'EMPTY',
+  0x01: 'ZONK',
+  0x02: 'BASE',
+  0x03: 'MURPHY',
+  0x04: 'INFOTRON',
+  0x05: 'CHIP',
+  0x06: 'WALL',
+  0x07: 'EXIT',
+  0x08: 'FLOPPY_ORANGE',
+  0x09: 'PORT_RIGHT',
+  0x0A: 'PORT_DOWN',
+  0x0B: 'PORT_LEFT',
+  0x0C: 'PORT_UP',
+  0x0D: 'GPORT_RIGHT',
+  0x0E: 'GPORT_DOWN',
+  0x0F: 'GPORT_LEFT',
+  0x10: 'GPORT_UP',
+  0x11: 'SNIKSNAK',
+  0x12: 'FLOPPY_YELLOW',
+  0x13: 'TERMINAL',
+  0x14: 'FLOPPY_RED',
+  0x15: 'PORT_VERTICAL',
+  0x16: 'PORT_HORIZONTAL',
+  0x17: 'PORT_ALL',
+  0x18: 'ELECTRON',
+  0x19: 'BUG',
+  0x1A: 'CHIP_LEFT',
+  0x1B: 'CHIP_RIGHT',
+  0x1C: 'HARDWARE1',
+  0x1D: 'HARDWARE2',
+  0x1E: 'HARDWARE3',
+  0x1F: 'HARDWARE4',
+  0x20: 'HARDWARE5',
+  0x21: 'HARDWARE6',
+  0x22: 'HARDWARE7',
+  0x23: 'HARDWARE8',
+  0x24: 'HARDWARE9',
+  0x25: 'HARDWARE10',
+  0x26: 'CHIP_TOP',
+  0x27: 'CHIP_BOTTOM'
 };
 
 
@@ -94,7 +92,8 @@ const Role = {
   },
   BUG: {
     active: 1000 / Constants.UPDATE_DURATION,
-    decision: 'decisionBug'
+    decision: 'decisionBug',
+    eatable: true
   },
   MURPHY: {
     facingHorizontal: 'left',
@@ -150,8 +149,8 @@ const makeRole = roleMaker();
 const _initial = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                   39, 0, 0, 0, 0, 0, 1, 0, 0, 0,
                   0, 19, 0, 0, 9, 2, 24, 0, 0, 0,
-                  24, 0, 21, 0, 0, 10, 0, 25, 0, 0,
-                  0, 0, 0, 0, 0, 1, 0, 11, 38, 0,
+                  24, 0, 21, 0, 0, 10, 25, 0, 0, 0,
+                  0, 0, 0, 0, 0, 1, 0, 11, 0, 0,
                   0, 4, 7, 21, 0, 0, 0, 0, 13, 39,
                   0, 30, 18, 8, 13, 0, 0, 0, 0, 20,
                   26, 31, 35, 0, 0, 0, 0, 0, 0, 0,
@@ -160,7 +159,22 @@ const _initial = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                   29, 34, 0, 0, 0, 0, 0, 0, 0, 0,
                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+const _spriteTest =
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       1, 2, 3, 4, 5, 6, 7, 8, 0, 0,
+       9, 10, 11, 12, 13, 14, 15, 16, 0, 0,
+       17, 18, 19, 20, 21, 22, 23, 24, 0, 0,
+       25, 26, 27, 28, 29, 30, 31, 32, 0, 0,
+       33, 34, 35, 36, 37, 38, 39, 40, 0, 0,
+       41, 41, 18, 8, 13, 0, 0, 0, 0, 20,
+       26, 31, 35, 0, 0, 0, 0, 0, 0, 0,
+       27, 32, 36, 0, 0, 0, 0, 0, 0, 0,
+       28, 33, 37, 0, 0, 0, 0, 0, 0, 0,
+       29, 34, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 const initial = enhance(_initial);
+const spriteTest = enhance(_spriteTest);
 
 function enhance2(arr) {
   var by = 24;
@@ -220,5 +234,6 @@ function read(tiles) {
 export {
   read,
   makeRole,
-  initial
+  initial,
+  spriteTest
 };

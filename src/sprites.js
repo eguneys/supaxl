@@ -38,8 +38,8 @@ export function sprites() {
     { infoVanish: frameIs },
     { infoExplode: frameIs },
     { explode: frameIs },
-    { disk: [0],
-      diskVanish: frameIs },
+    { reddisk: [0],
+      reddiskVanish: frameIs },
     { redTerminal: [0],
       redTerminalOn: frameIs },
     { greenTerminal: [0],
@@ -51,24 +51,33 @@ export function sprites() {
       exit: [7]
     },
     { 
-      hardware2: [0],
+      hardware5: [0],
+      hardware6: [1],
+      hardware7: [2],
+      hardware8: [3],
+      hardware9: [4],
+      hardware10: [5],
       yellowdisk: [6],
-      reddisk: [7]
+      orangedisk: [7]
     },
-    { chipUp: [0],
+    { chipTop: [0],
       chipLeft: [1],
       chip: [2],
       hardware1: [3],
+      hardware2: [4],
+      hardware3: [5],
+      hardware4: [6],
+      wall: [7]
     },
     {
-      chipTop: [0],
+      chipBottom: [0],
       chipRight: [1],
       portVertical: [2],
       portAll: [3],
       portUp: [4],
       portDown: [4],
-      portLeft: [5],
-      portRight: [6],
+      portRight: [5],
+      portLeft: [6],
       portHorizontal: [7]
     },
     {

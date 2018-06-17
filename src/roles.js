@@ -46,7 +46,8 @@ function initGame(data) {
   data.gravity = level.gravity;
 
   data.tiles = levels.read(level.data);
-  data.tiles = levels.read(levels.initial);
+  // data.tiles = levels.read(levels.initial);
+  //data.tiles = levels.read(levels.spriteTest);
 
   decisions.centerScroll(data);
 };
