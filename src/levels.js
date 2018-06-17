@@ -173,8 +173,23 @@ const _spriteTest =
        29, 34, 0, 0, 0, 0, 0, 0, 0, 0,
        0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+const _edgeTest = [
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+  4, 2, 2, 2, 2, 2, 2, 0x17, 2, 4,
+  2, 2, 2, 2, 2, 1, 2, 2, 2, 2,
+  2, 2, 2, 2, 2, 2, 1, 2, 2, 2,
+  4, 2, 2, 2, 2, 2, 0x17, 1, 2, 4,
+  2, 2, 0x17, 2, 2, 2, 2, 2, 2, 2,
+  2, 2, 2, 2, 2, 2, 2, 2, 0x17, 2,
+  2, 2, 2, 2, 2, 0x17, 2, 2, 2, 2,
+  4, 4, 2, 4, 2, 4, 2, 2, 4, 2];
+
 const initial = enhance(_initial);
 const spriteTest = enhance(_spriteTest);
+const edgeTest = enhance(_edgeTest);
 
 function enhance2(arr) {
   var by = 24;
@@ -235,5 +250,6 @@ export {
   read,
   makeRole,
   initial,
-  spriteTest
+  spriteTest,
+  edgeTest
 };
