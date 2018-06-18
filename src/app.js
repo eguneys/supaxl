@@ -18,6 +18,7 @@ export default function app(element) {
     .add("images/SupaplexSprites.png")
     .add("images/SupaplexBorder.png")
     .add("images/hud.png")
+    .add("images/main_menu1.png")
     .add("levels", "build/levels.json")
     .load(() => {
       const ctrl = new controller(

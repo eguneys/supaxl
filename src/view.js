@@ -139,11 +139,16 @@ const frames = {
 };
 
 export function renderWrap(ctrl, app, textures) {
-  const container = pContainer();
-  app.stage.addChild(container);
-  const borderContainer = bContainer(ctrl.data, textures);
-  app.stage.addChild(borderContainer);
+  const wrapperContainer = dContainer();
 
+  const container = pContainer();
+
+  wrapperContainer.addChild(container);
+  wrapperContainer.addChild(hudSprite(ctrl.data, textures));
+  const borderContainer = bContainer(ctrl.data, textures);
+
+  app.stage.addChild(borderContainer);
+  app.stage.addChild(wrapperContainer);
 
 
   const portMurphy = asprite(textures['murphy-left']);
@@ -284,6 +289,19 @@ export function renderWrap(ctrl, app, textures) {
     });
   
   };
+}
+
+function hudSprite(data, textures) {
+  let tileWidth = 32 * (data.viewWidth + 2),
+      tileHeight = 32 * (data.viewHeight + 2);
+
+
+  let hud = sprite(textures['hud']);
+
+  hud.width = tileWidth;
+  hud.position.set(0, tileHeight - 3 * 16);
+
+  return hud;
 }
 
 function bContainer(data, textures) {

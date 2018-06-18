@@ -6,8 +6,17 @@ export function sprites() {
 
   tiles(tss);
   borders(tss);
+  hud(tss);
 
   return tss;
+}
+
+function hud(tss) {
+  let texture = PIXI.utils.TextureCache['images/hud.png'];
+  tss['hud'] = new PIXI.Texture(texture);
+
+  texture = PIXI.utils.TextureCache['images/main_menu1.png'];
+  tss['main_menu'] = new PIXI.Texture(texture);
 }
 
 function borders(tss) {
