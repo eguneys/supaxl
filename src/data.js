@@ -9,7 +9,7 @@ const VIEW_HEIGHT = 6 * 2;
 const RENDER_WIDTH = VIEW_WIDTH + 5;
 const RENDER_HEIGHT = VIEW_HEIGHT + 5;
 
-const UPDATE_DURATION = 100;
+const UPDATE_DURATION = 80;
 
 export {
   TILE_SIZE,
@@ -36,8 +36,10 @@ export default function(cfg) {
     showHUD: true,
     mapHeight: MAP_HEIGHT,
     mapWidth: MAP_WIDTH,
-    viewHeight: VIEW_HEIGHT * TILE_SIZE + (TILE_SIZE / 2),
-    viewWidth: VIEW_WIDTH * TILE_SIZE,
+    viewHeight: VIEW_HEIGHT,
+    viewWidth: VIEW_WIDTH,
+    renderHeight: RENDER_HEIGHT,
+    renderWidth: RENDER_WIDTH,
     measure: {
       world: [MAP_WIDTH, MAP_HEIGHT],
       screen: [RENDER_WIDTH, RENDER_HEIGHT],
