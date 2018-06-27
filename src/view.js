@@ -321,15 +321,25 @@ function hudSprite(data, textures) {
   hudContainer.position.set(0, tileHeight);
 
 
-  let text = pText(padZero(data.infotronsNeeded, 3));
-  text.position.set(tileWidth * 0.88, barHeight * 0.55);
+  let infos = pText(padZero(data.infotronsNeeded, 3));
+  infos.position.set(tileWidth * 0.88, barHeight * 0.55);
 
-  hudContainer.addChild(text);
+  let levelNo = pText(padZero(data.levelNo, 3));
+  levelNo.position.set(tileWidth * 0.08, barHeight * 0.55);
+
+  let levelTitle = pText(data.levelTitle);
+  levelTitle.position.set(tileWidth * 0.20, barHeight * 0.55);
+  levelTitle.width = tileWidth * 0.5;
+
+
+  hudContainer.addChild(infos);
+  hudContainer.addChild(levelNo);
+  hudContainer.addChild(levelTitle);
 
   let hudUpdate = (data) => {
-    text.text = padZero(data.infotronsNeeded, 3);
+    infos.text = padZero(data.infotronsNeeded, 3);
   };
-
+  
   return {
     hudContainer,
     hudUpdate
