@@ -164,7 +164,8 @@ function tiles (tss) {
     },
     { "murphy-right": frameIs },
     { "murphy-left": frameIs },
-    { murphyVanish: frameIs }
+    { murphyVanish: frameIs,
+      black: [7] }
   ];
 
   const baseTexture = PIXI.utils.TextureCache['images/Supaplex32.png'];

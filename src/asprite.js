@@ -1,5 +1,14 @@
 import * as PIXI from 'pixi.js';
 
+export function pText(text) {
+  return new PIXI.Text(text, {
+    fontFamily: "thin_pixel",
+    fontWeight: 'bold',
+    fontSize: '36px',
+    fill: 'red'
+  });
+}
+
 export function pContainer() {
 
   return new PIXI.particles.ParticleContainer(1000, {

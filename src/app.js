@@ -9,7 +9,7 @@ export default function app(element) {
 
   const app = new PIXI.Application({
     width: 32 * (20 + 1 + 1),
-    height: 32 * (12 + 1 + 1)
+    height: 32 * (12 + 1 + 1) + 32 * 1.5
   });
 
 

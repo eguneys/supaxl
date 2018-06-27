@@ -1,5 +1,6 @@
-import { dContainer, pContainer, asprite, sprite } from './asprite';
-import { key2pos, pos2key, allPos } from './util';
+import { pText,
+         dContainer, pContainer, asprite, sprite } from './asprite';
+import { padZero, key2pos, pos2key, allPos } from './util';
 
 
 function tFrame(textures, tile) {
@@ -142,9 +143,11 @@ export function renderWrap(ctrl, app, textures) {
   const wrapperContainer = dContainer();
 
   const container = pContainer();
+  const { hudContainer, hudUpdate } =
+        hudSprite(ctrl.data, textures);
 
   wrapperContainer.addChild(container);
-  wrapperContainer.addChild(hudSprite(ctrl.data, textures));
+  wrapperContainer.addChild(hudContainer);
   const borderContainer = bContainer(ctrl.data, textures);
 
   app.stage.addChild(borderContainer);
@@ -190,7 +193,11 @@ export function renderWrap(ctrl, app, textures) {
 
   let bOffset = -64;
 
+  // let hudOffsetY = - 32 * 1.5;
+
   return () => {
+    hudUpdate(ctrl.data);
+
     let { offset, edgeOffset } = measure;
 
     if (edgeOffset) {
@@ -292,16 +299,41 @@ export function renderWrap(ctrl, app, textures) {
 }
 
 function hudSprite(data, textures) {
+  let hudContainer = dContainer();
+
   let tileWidth = 32 * (data.viewWidth + 2),
-      tileHeight = 32 * (data.viewHeight + 2);
+      tileHeight = 32 * (data.viewHeight + 2),
+      barHeight = 32 * 1.5;
+
 
 
   let hud = sprite(textures['hud']);
-
   hud.width = tileWidth;
-  hud.position.set(0, tileHeight - 3 * 16);
+  hud.height = barHeight;
+  hudContainer.addChild(hud);
 
-  return hud;
+  let seperator = sprite(textures['black'][0]);
+  seperator.width = tileWidth;
+  seperator.height = 1;
+  hudContainer.addChild(seperator);
+
+
+  hudContainer.position.set(0, tileHeight);
+
+
+  let text = pText(padZero(data.infotronsNeeded, 3));
+  text.position.set(tileWidth * 0.88, barHeight * 0.55);
+
+  hudContainer.addChild(text);
+
+  let hudUpdate = (data) => {
+    text.text = padZero(data.infotronsNeeded, 3);
+  };
+
+  return {
+    hudContainer,
+    hudUpdate
+  };
 }
 
 function bContainer(data, textures) {

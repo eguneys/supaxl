@@ -1,3 +1,12 @@
 import app from './app';
+import WebFont from 'webfontloader';
 
-app(document.getElementById('elCanvas'));
+WebFont.load({
+  custom: {
+    families: ['thin_pixel'],
+    urls: ['images/fonts.css']
+  },
+  active: e => {
+    app(document.getElementById('elCanvas'));
+  }
+});

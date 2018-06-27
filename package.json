@@ -4,7 +4,8 @@
   "description": "",
   "dependencies": {
     "mousetrap": "^1.6.1",
-    "pixi.js": "^4.7.3"
+    "pixi.js": "^4.7.3",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",
