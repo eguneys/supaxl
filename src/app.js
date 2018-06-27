@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 import { sprites } from './sprites';
 
 import controller from './ctrl';
-import { renderWrap }  from './view';
+import { render }  from './view';
 import keyboard from './keyboard';
 
 export default function app(element) {
@@ -18,21 +18,25 @@ export default function app(element) {
     .add("images/SupaplexSprites.png")
     .add("images/SupaplexBorder.png")
     .add("images/hud.png")
-    .add("images/main_menu1.png")
+    .add("images/pointer2.png")
+    .add("images/button_up.png")
+    .add("images/button_down21.png")
+    .add("images/main_menu21.png")
     .add("levels", "build/levels.json")
     .load(() => {
       const ctrl = new controller(
         PIXI.loader.resources.levels.data);
 
       const textures = sprites();
-      const render = renderWrap(ctrl, app, textures);
+
+      const update = render(ctrl, app, textures);
 
       keyboard(ctrl);
 
 
       app.ticker.add((delta) => {
         ctrl.update();
-        render();
+        update();
       });
     });
   

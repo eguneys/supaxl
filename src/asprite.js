@@ -1,11 +1,10 @@
 import * as PIXI from 'pixi.js';
 
-export function pText(text) {
+export function pText(text, fill = 'red') {
   return new PIXI.Text(text, {
     fontFamily: "thin_pixel",
-    fontWeight: 'bold',
     fontSize: '36px',
-    fill: 'red'
+    fill: fill
   });
 }
 

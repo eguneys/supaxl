@@ -15,8 +15,30 @@ function hud(tss) {
   let texture = PIXI.utils.TextureCache['images/hud.png'];
   tss['hud'] = new PIXI.Texture(texture);
 
-  texture = PIXI.utils.TextureCache['images/main_menu1.png'];
+  texture = PIXI.utils.TextureCache['images/main_menu21.png'];
   tss['main_menu'] = new PIXI.Texture(texture);
+
+  texture = PIXI.utils.TextureCache['images/button_up.png'];
+  tss['button_up'] = new PIXI.Texture(texture);
+
+  texture = PIXI.utils.TextureCache['images/button_down21.png'];
+  tss['button_down'] = new PIXI.Texture(texture);
+
+  let rows = [0,1,2,3,4,5,6,7];
+
+  let textures = rows.map((row) => {
+    let posX = row * 8;
+    
+    let rect = new PIXI.Rectangle(posX, 0, 8, 9);
+    let texture = new PIXI.Texture(
+      PIXI.utils.TextureCache['images/pointer2.png']
+    );
+    texture.frame = rect;
+    return texture;
+  });
+
+  tss['pointer'] = textures;
+
 }
 
 function borders(tss) {

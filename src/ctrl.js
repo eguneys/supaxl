@@ -4,12 +4,12 @@ import * as util from './util';
 // import * as anim from './anim';
 
 export default function(levelData) {
-  const WELCOME_MSG = '&nbsp;&nbsp;WELCOME TO SUPAPLEX';
+  const WELCOME_MSG = '  WELCOME TO SUPAPLEX';
   this.data = data();
 
   this.data.levelData = levelData;
 
-  this.data.currentView = 'GAME';
+  // this.data.currentView = 'GAME';
   roles.initGame(this.data);
 
   this.vm = {
