@@ -17,13 +17,21 @@ export function render(ctrl, app, textures) {
     if (ctrl.data.currentView === 'GAME') {
       if (!ctrl.data.currentViewInitialized) {
         ctrl.data.currentViewInitialized = true;
+
+        if (gameWrap) {
+          container.removeChild(gameWrap.appContainer);
+        }
         gameWrap = renderWrap(ctrl, textures);
         container.addChild(gameWrap.appContainer);
         menuWrap.appContainer.visible = false;
+        gameWrap.appContainer.visible = true;
       }
 
       gameWrap.update();
     } else {
+      if (gameWrap) {
+        gameWrap.appContainer.visible = false;
+      }
       menuWrap.appContainer.visible = true;
       ctrl.data.currentViewInitialized = false;
       menuWrap.update();      

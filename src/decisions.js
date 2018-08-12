@@ -2,7 +2,7 @@ import * as levels from './levels';
 import * as rolls from './rolls';
 import * as Constants from './data';
 import * as util from './util';
-// import * as anim from './anim';
+import * as anim from './anim';
 
 import { bounds } from './bounds';
 
@@ -124,7 +124,7 @@ function decisionInput(data, pos) {
   if (inputs[escape]) {
     // explode
     // transition
-    // anim.fadeToView(data, 'MENU', 0, 1);
+    anim.fadeToView(data, 'MENU', 0, 1);
   }
 
   let handled =
