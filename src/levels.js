@@ -121,7 +121,14 @@ const Role = {
   },
   PORT_VERTICAL: {
     portable: { up: true, down: true }
-  }
+  },
+  TERMINAL: {
+    terminal: true
+  },
+  FLOPPY_YELLOW: {
+    decision: 'decisionTerminal'
+  },
+
 };
 
 function roleMaker() {
@@ -187,9 +194,24 @@ const _edgeTest = [
   2, 2, 2, 2, 2, 0x17, 2, 2, 2, 2,
   4, 4, 2, 4, 2, 4, 2, 2, 4, 2];
 
+const _exTest = [
+  0x19, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+  2, 2, 2, 2, 2, 0x12, 2, 2, 2, 2,
+  4, 2, 0x12, 2, 2, 2, 2, 0x17, 2, 4,
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+  2, 2, 2, 2, 2, 2, 0x13, 2, 2, 2,
+  4, 2, 2, 2, 2, 2, 2, 1, 2, 4,
+  2, 2, 0x17, 2, 2, 2, 2, 2, 2, 2,
+  2, 2, 2, 2, 2, 2, 2, 2, 0x17, 2,
+  2, 2, 2, 2, 2, 0x17, 2, 2, 2, 2,
+  4, 4, 2, 4, 2, 4, 2, 2, 4, 2];
+
 const initial = enhance(_initial);
 const spriteTest = enhance(_spriteTest);
 const edgeTest = enhance(_edgeTest);
+const exTest = enhance(_exTest);
 
 function enhance2(arr) {
   var by = 24;
@@ -251,5 +273,6 @@ export {
   makeRole,
   initial,
   spriteTest,
-  edgeTest
+  edgeTest,
+  exTest
 };

@@ -9,8 +9,8 @@ export default function(levelData) {
 
   this.data.levelData = levelData;
 
-  // this.data.currentView = 'GAME';
-  // roles.initGame(this.data);
+  this.data.currentView = 'GAME';
+  roles.initGame(this.data);
 
   this.vm = {
     messageLine: WELCOME_MSG

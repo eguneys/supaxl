@@ -152,6 +152,8 @@ function decisionInput(data, pos) {
         }
       } else if (canEat(data, pos, dir)) {
         morphyEatMove(data, pos, dir);
+      } else if (canTerminal(data, pos, dir)) {
+        morphyTerminal(data, pos, dir);
       } else {
         return false;
       }
@@ -185,6 +187,7 @@ function morphyStand(data, pos) {
   const tile = data.tiles[pos];
 
   tile.pushing = 0;
+  tile.terminal = 0;
   tile.nextDecision = decisionInput;
 }
 
@@ -209,8 +212,18 @@ function morphyMove(data, pos, dir, nextPos) {
 
   setMorphyFace(tile, dir);
   tile.pushing = 0;
+  tile.terminal = 0;
   tile.moving = 1;
   tile.nextDecision = decisionMurphyMove2;
+}
+
+function morphyTerminal(data, pos, dir) {
+  const tile = data.tiles[pos];
+
+  setMorphyFace(tile, dir);
+  tile.terminal = 1;
+  data.terminal = 1;
+  tile.nextDecision = decisionInput;  
 }
 
 function morphyPush(data, pos, dir) {
@@ -666,6 +679,20 @@ function canPushMove(data, pos, dir) {
   return tile.pushing === 2;
 }
 
+function canTerminal(data, pos, dir) {
+    const neighbor = posNeighbor(pos, dir);
+  if (!isLegitNeighbor(data, pos, dir, neighbor)) {
+    return false;
+  }
+
+  const tile = data.tiles[neighbor];
+
+  if (tile.terminal) {
+    return true;
+  }
+  return false;
+}
+
 function canPush(data, pos, dir) {
   const neighbor = posNeighbor(pos, dir);
   if (!isLegitNeighbor(data, pos, dir, neighbor)) {
@@ -717,7 +744,7 @@ function isLegitNeighbor(data, pos, dir, neighbor) {
            (isHorizontal(dir) && !isSameRow(rows, pos, neighbor)));
 }
 
-function posNeighbor(pos, dir) {
+export function posNeighbor(pos, dir) {
   return pos + Move[dir].v;
 }
 

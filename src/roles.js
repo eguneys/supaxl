@@ -1,12 +1,14 @@
 import * as levels from './levels';
 import * as decisions from './decisions';
 import * as rolls from './rolls';
+import * as explosions from './explosions';
 
 const decisionMap = {
   'decisionTurn': decisions.decisionTurn,
   'decisionBug': decisions.decisionBug,
   'decisionInput': decisions.decisionInput,
-  'decisionFall': rolls.decisionFall
+  'decisionFall': rolls.decisionFall,
+  'decisionTerminal': explosions.decisionTerminal
 };
 
 function noop() {}
@@ -45,10 +47,13 @@ function initGame(data) {
   data.infotronsNeeded = level.infotronsNeeded;
   data.gravity = level.gravity;
 
+  data.terminal = 0;
+
   data.tiles = levels.read(level.data);
   // data.tiles = levels.read(levels.initial);
   //data.tiles = levels.read(levels.spriteTest);
   // data.tiles = levels.read(levels.edgeTest);
+  data.tiles = levels.read(levels.exTest);
 
   decisions.centerScroll(data);
 };

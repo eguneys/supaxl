@@ -44,7 +44,7 @@ const durations = {
   "info-roll-left": 600,
   infoVanish: 240,
   infoExplode: 200,
-  explode: 200,
+  explode: 10000,
   diskVanish: 200,
   redTerminalOn: 2000,
   greenTerminalOn: 2000,
@@ -98,6 +98,9 @@ const frames = {
     } else if (tile.snapping > 0) {
       return ['murphy', 'snap', tile.facing].join('-');
     }
+    else if (tile.terminal > 0) {
+      return ['murphy', 'snap', tile.facing].join('-');
+    }
     return 'murphy';
   },
   TERMINAL: (tile) => {
@@ -106,7 +109,7 @@ const frames = {
   EMPTY: 'empty',
   EXIT: 'exit',
   WALL: 'wall',
-  EXPLOSION: 'explosion',
+  EXPLOSION: 'explode',
   FLOPPY_RED: 'reddisk',
   FLOPPY_ORANGE: 'orangedisk',
   FLOPPY_YELLOW: 'yellowdisk',
