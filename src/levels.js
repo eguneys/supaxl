@@ -139,8 +139,18 @@ const Role = {
   FLOPPY_ORANGE: {
     chainExplode: true,
     decision: 'decisionFall'
-  }
-
+  },
+  WALL: {nonexplodable:true},
+  HARDWARE1: {nonexplodable:true},
+  HARDWARE2: {nonexplodable:true},
+  HARDWARE3: {nonexplodable:true},
+  HARDWARE4: {nonexplodable:true},
+  HARDWARE5: {nonexplodable:true},
+  HARDWARE6: {nonexplodable:true},
+  HARDWARE7: {nonexplodable:true},
+  HARDWARE8: {nonexplodable:true},
+  HARDWARE9: {nonexplodable:true},
+  HARDWARE10: {nonexplodable:true}
 };
 
 function roleMaker() {

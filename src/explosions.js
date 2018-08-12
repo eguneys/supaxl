@@ -35,6 +35,9 @@ export function explode(data, pos) {
     .map((key) => data.tiles[key])
     .forEach((etile) => {
       if (!etile) return;
+      if (etile.nonexplodable) {
+        return;
+      }
 
       etile.prevRole = etile.prevRole || etile.role;
       etile.cause = tile.prevRole;
