@@ -60,7 +60,7 @@ const Role = {
     moving: 0,
     round: true,
     pushable: true,
-    chainExplode: true,
+    chainExplode: false,
     decision: 'decisionFall'
   },
   INFOTRON: {

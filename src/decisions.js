@@ -153,6 +153,8 @@ function decisionInput(data, pos) {
         }
       } else if (canEat(data, pos, dir)) {
         morphyEatMove(data, pos, dir);
+      } else if (canRoundClash(data, pos, dir)) {
+        explosions.explode(data, pos);
       } else if (canTerminal(data, pos, dir)) {
         morphyTerminal(data, pos, dir);
       } else {
@@ -654,6 +656,24 @@ export function canExplode(data, pos, dir) {
   return tile.explodable;
 }
 
+function canRoundClash(data, pos, dir) {
+  const rows = data.mapWidth;
+  const cols = data.mapHeight;
+  const mapLength = rows * cols;
+
+  const neighbor = posNeighbor(pos, dir);
+
+
+  if (!isLegitNeighbor(data, pos, dir, neighbor)) {
+        return false;
+  }
+
+  const tile = data.tiles[neighbor];
+  return tile.falling > 1 ||
+    tile.rolling > 1  ||
+    tile.moving > 1;
+}
+
 function canGo(data, pos, dir) {
   const rows = data.mapWidth;
   const cols = data.mapHeight;
@@ -732,6 +752,10 @@ function canTerminal(data, pos, dir) {
 function canPush(data, pos, dir) {
   const neighbor = posNeighbor(pos, dir);
   if (!isLegitNeighbor(data, pos, dir, neighbor)) {
+    return false;
+  }
+
+  if (dir === 'down' || dir === 'up') {
     return false;
   }
 

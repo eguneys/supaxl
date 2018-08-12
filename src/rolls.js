@@ -22,7 +22,7 @@ function decisionFall(data, pos) {
     roll1(data, pos, 'left', 1);
   } else if (decisions.canRoll(data, pos, 'right')) {
     roll1(data, pos, 'right', 1);
-  } if (decisions.canExplode(data, pos, 'down') &&
+  } else if (decisions.canExplode(data, pos, 'down') &&
         (tile.falling > 1)) {
     let posDown = decisions.posNeighbor(pos, 'down');
     explosions.explode(data, posDown);
