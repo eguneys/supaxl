@@ -1,7 +1,7 @@
 import data from './data';
 import * as roles from './roles';
 import * as util from './util';
-// import * as anim from './anim';
+import * as anim from './anim';
 
 export default function(levelData) {
   const WELCOME_MSG = '  WELCOME TO SUPAPLEX';
@@ -10,16 +10,16 @@ export default function(levelData) {
   this.data.levelData = levelData;
 
   // this.data.currentView = 'GAME';
-  roles.initGame(this.data);
+  // roles.initGame(this.data);
 
   this.vm = {
     messageLine: WELCOME_MSG
   };
 
-  this.levelSelect = (delay = 1) => {
+  this.levelSelect = (delay = 1000) => {
     const data = this.data;
     roles.initGame(data);
-    // anim.fadeToView(data, 'GAME', delay, 1);
+    anim.fadeToView(data, 'GAME', 100, 100);
   };
 
   this.levelLine = (levelNo) => {
@@ -101,7 +101,6 @@ export default function(levelData) {
 
   this.update = () => {
     const data = this.data;
-
     if (data.currentView === 'GAME') {
       this.updateGameView();
     } else {
@@ -113,8 +112,8 @@ export default function(levelData) {
     const data = this.data;
     const newTweens = {};
 
-
     const now = Date.now();
+
     Object.keys(data.tweens).map((key) => {
       const tween = data.tweens[key];
       const nowOrPause = tween.pause?tween.pause:now;
