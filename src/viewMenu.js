@@ -77,6 +77,13 @@ export function renderMenu(ctrl, textures) {
   appContainer.on('mousemove', function(e) {
     pointer.position.set(e.data.global.x, e.data.global.y);
   });
+  appContainer.on('mouseup', function() {
+    up.alpha = 0;
+    levelUpHold.mouseup();
+    down.alpha = 0;
+    levelDownHold.mouseup();
+  });
+
 
   function levelListUp(data) {
     data.selectedLevel = Math.max(1, data.selectedLevel - 1);
@@ -96,10 +103,6 @@ export function renderMenu(ctrl, textures) {
     up.alpha = 1;
     levelUpHold.mousedown(ctrl.data);
   });
-  up.on('mouseup', function() {
-    up.alpha = 0;
-    levelUpHold.mouseup();
-  });
 
   down.interactive = true;
   down.on('mousedown', function() {
@@ -107,10 +110,7 @@ export function renderMenu(ctrl, textures) {
 
     levelDownHold.mousedown(ctrl.data);
   });
-  down.on('mouseup', function() {
-    down.alpha = 0;
-    levelDownHold.mouseup();
-  });
+
 
   okButton.interactive = true;
   okButton.on('mousedown', function() {
