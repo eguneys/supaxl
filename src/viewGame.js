@@ -44,7 +44,7 @@ const durations = {
   "info-roll-left": 600,
   infoVanish: 240,
   infoExplode: 200,
-  explode: 10000,
+  explode: 80 * 6.5,
   diskVanish: 200,
   redTerminalOn: 2000,
   greenTerminalOn: 2000,

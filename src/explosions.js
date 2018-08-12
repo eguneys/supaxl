@@ -1,4 +1,5 @@
 import * as decisions from './decisions';
+import * as anim from './anim';
 
 
 export function decisionTerminal(data, pos) {
@@ -9,7 +10,11 @@ export function decisionTerminal(data, pos) {
   }
 }
 
-function explode(data, pos) {
+export function decisionExplodeExit(data, pos) {
+  explode(data, pos);
+}
+
+export function explode(data, pos) {
   const { posNeighbor } = decisions;
   const tile = data.tiles[pos];
 
@@ -29,9 +34,12 @@ function explode(data, pos) {
   explosions
     .map((key) => data.tiles[key])
     .forEach((tile) => {
-    
-    tile.role = 'EXPLOSION';
-    tile.nextDecision = decisionExplode2;
+      if (!tile) return;
+
+      tile.prevRole = tile.prevRole || tile.role;
+      tile.role = 'EXPLOSION';
+      tile.explosion = 0;
+      tile.nextDecision = decisionExplode2;
   });
 
 }
@@ -39,7 +47,21 @@ function explode(data, pos) {
 function decisionExplode2(data, pos) {
   const tile = data.tiles[pos];
 
-  tile.nextDecision = decisionExplodeEnd;
+  tile.explosion++;
+
+  if (tile.explosion === 3) {
+    if (tile.chainExplode) {
+      tile.chainExplode = false;
+      explode(data, pos);
+    }
+  }
+
+  if (tile.explosion === 6) {
+    if (tile.prevRole === 'MURPHY') {
+      anim.fadeToView(data, 'MENU', 1000, 1);
+    }
+    tile.nextDecision = decisionExplodeEnd;
+  }
 }
 
 function decisionExplodeEnd(data, pos) {

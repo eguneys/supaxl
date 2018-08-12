@@ -1,5 +1,6 @@
 import * as levels from './levels';
 import * as rolls from './rolls';
+import * as explosions from './explosions';
 import * as Constants from './data';
 import * as util from './util';
 import * as anim from './anim';
@@ -553,7 +554,10 @@ function decisionTurn(data, pos) {
   const dirAhead = tile.facing;
   const dirRight = ofRight(tile.facing);
 
-  if (canGo(data, pos, dirLeft)) {
+  if (isMurphy(data, pos, dirAhead)) {
+    const posAhead = posNeighbor(pos, dirAhead);
+    explosions.explode(data, posAhead);
+  } else if (canGo(data, pos, dirLeft)) {
     turn(data, pos, dirLeft);
   } else if (canGo(data, pos, dirAhead)) {
     move1(data, pos);
@@ -616,6 +620,38 @@ function turn(data, pos, dir) {
   tile.facing = dir;
 
   tile.nextDecision = decisionMove;
+}
+
+function isMurphy(data, pos, dir) {
+  const rows = data.mapWidth;
+  const cols = data.mapHeight;
+  const mapLength = rows * cols;
+
+  const neighbor = posNeighbor(pos, dir);
+
+
+  if (!isLegitNeighbor(data, pos, dir, neighbor)) {
+        return false;
+  }
+
+  const tile = data.tiles[neighbor];
+  return tile.role === 'MURPHY';
+}
+
+export function canExplode(data, pos, dir) {
+  const rows = data.mapWidth;
+  const cols = data.mapHeight;
+  const mapLength = rows * cols;
+
+  const neighbor = posNeighbor(pos, dir);
+
+
+  if (!isLegitNeighbor(data, pos, dir, neighbor)) {
+        return false;
+  }
+
+  const tile = data.tiles[neighbor];
+  return tile.explodable;
 }
 
 function canGo(data, pos, dir) {

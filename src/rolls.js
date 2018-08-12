@@ -1,4 +1,5 @@
 import * as decisions from './decisions';
+import * as explosions from './explosions';
 
 /*
  // still // fall 2 // roll 2
@@ -21,6 +22,10 @@ function decisionFall(data, pos) {
     roll1(data, pos, 'left', 1);
   } else if (decisions.canRoll(data, pos, 'right')) {
     roll1(data, pos, 'right', 1);
+  } if (decisions.canExplode(data, pos, 'down') &&
+        (tile.falling > 1)) {
+    let posDown = decisions.posNeighbor(pos, 'down');
+    explosions.explode(data, posDown);
   } else {
     still(data, pos);
   }
@@ -56,6 +61,7 @@ function fall2(data, pos) {
 
   tile.moving = 2;
   tile.falling = 2;
+
   tile.nextDecision = decisionFall;
 }
 
