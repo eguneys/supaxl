@@ -33,13 +33,14 @@ export function explode(data, pos) {
 
   explosions
     .map((key) => data.tiles[key])
-    .forEach((tile) => {
-      if (!tile) return;
+    .forEach((etile) => {
+      if (!etile) return;
 
-      tile.prevRole = tile.prevRole || tile.role;
-      tile.role = 'EXPLOSION';
-      tile.explosion = 0;
-      tile.nextDecision = decisionExplode2;
+      etile.prevRole = etile.prevRole || etile.role;
+      etile.cause = tile.prevRole;
+      etile.role = 'EXPLOSION';
+      etile.explosion = 0;
+      etile.nextDecision = decisionExplode2;
   });
 
 }
@@ -67,5 +68,19 @@ function decisionExplode2(data, pos) {
 function decisionExplodeEnd(data, pos) {
   const tile = data.tiles[pos];
 
-  tile.role = 'EMPTY';
+  if (tile.cause === 'ELECTRON') {
+    tile.role = 'INFOTRON';
+    tile.eatable = true;
+    tile.round = true;
+    tile.explodable = false;
+    tile.chainExplode = true;
+    delete tile.nextDecision;
+    tile.decision = 'decisionFall';
+    tile.isTrail = false;
+    tile.moving = 0;
+    tile.falling = 0;
+  } else {
+    tile.role = 'EMPTY';
+    tile.isTrail = false;
+  }
 }

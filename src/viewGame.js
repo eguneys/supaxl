@@ -103,13 +103,19 @@ const frames = {
     }
     return 'murphy';
   },
+  EXPLOSION: (tile) => {
+    if (tile.prevRole === 'ELECTRON') {
+      return 'infoExplode';
+    }
+    return 'explode';
+  },
   TERMINAL: (tile) => {
     return 'greenTerminalOn';
   },
+  ELECTRON: 'electron',
   EMPTY: 'empty',
   EXIT: 'exit',
   WALL: 'wall',
-  EXPLOSION: 'explode',
   FLOPPY_RED: 'reddisk',
   FLOPPY_ORANGE: 'orangedisk',
   FLOPPY_YELLOW: 'yellowdisk',
@@ -128,7 +134,6 @@ const frames = {
   HARDWARE8: 'hardware8',
   HARDWARE9: 'hardware9',
   HARDWARE10: 'hardware10',
-  ELECTRON: 'electron',
   PORT_ALL: 'portAll',
   PORT_UP: 'portUp',
   PORT_DOWN: 'portDown',
