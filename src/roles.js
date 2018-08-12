@@ -53,7 +53,7 @@ function initGame(data) {
   // data.tiles = levels.read(levels.initial);
   //data.tiles = levels.read(levels.spriteTest);
   // data.tiles = levels.read(levels.edgeTest);
-  data.tiles = levels.read(levels.exTest);
+  // data.tiles = levels.read(levels.exTest);
 
   decisions.centerScroll(data);
 };

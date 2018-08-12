@@ -52,18 +52,22 @@ const Role = {
     facing: 'left',
     preFace: 'left',
     moving: 0,
+    explodable: true,
+    chainExplode: true,
     decision: 'decisionTurn'
   },
   ZONK: {
     moving: 0,
     round: true,
     pushable: true,
+    chainExplode: false,
     decision: 'decisionFall'
   },
   INFOTRON: {
     moving: 0,
     round: true,
     eatable: true,
+    chainExplode: true,
     decision: 'decisionFall'
   },
   BASE: {
@@ -88,6 +92,8 @@ const Role = {
     facing: 'left',
     preFace: 'left',
     moving: 0,
+    explodable: true,
+    chainExplode: true,
     decision: 'decisionTurn'
   },
   BUG: {
@@ -99,6 +105,8 @@ const Role = {
     facingHorizontal: 'left',
     facing: 'left',
     moving: 0,
+    explodable: true,
+    chainExplode: true,
     decision: 'decisionInput'
   },
   PORT_ALL: {
@@ -128,6 +136,10 @@ const Role = {
   FLOPPY_YELLOW: {
     decision: 'decisionTerminal'
   },
+  FLOPPY_ORANGE: {
+    chainExplode: true,
+    decision: 'decisionFall'
+  }
 
 };
 
