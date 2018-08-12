@@ -661,8 +661,16 @@ export function canExplode(data, pos, dir) {
         return false;
   }
 
-  const tile = data.tiles[neighbor];
-  return tile.explodable;
+  const tile = data.tiles[pos],
+        nTile = data.tiles[neighbor];
+
+  return tile.falling > 1 && nTile.explodable;
+}
+
+export function canDiskplode(data, pos, dir) {
+  const tile = data.tiles[pos];
+
+  return tile.falling > 1 && tile.role === 'FLOPPY_ORANGE';
 }
 
 function canRoundClash(data, pos, dir) {
@@ -744,9 +752,11 @@ function canRoll(data, pos, dir) {
         return false;
   }
 
+  const tile = data.tiles[pos];
   const belowTile = data.tiles[belowPos];
 
   if (!belowTile.round ||
+      tile.nonRound ||
       belowTile.falling > 0 ||
       belowTile.rolling > 0) {
     return false;

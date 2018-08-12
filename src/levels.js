@@ -138,6 +138,8 @@ const Role = {
   },
   FLOPPY_ORANGE: {
     chainExplode: true,
+    explodable: true,
+    nonRound: true,
     decision: 'decisionFall'
   },
   WALL: {nonexplodable:true},
