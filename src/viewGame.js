@@ -100,6 +100,8 @@ const frames = {
     }
     else if (tile.terminal > 0) {
       return ['murphy', 'snap', tile.facing].join('-');
+    } else if (tile.exiting > 0) {
+      return 'murphyVanish';
     }
     return 'murphy';
   },

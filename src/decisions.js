@@ -157,6 +157,8 @@ function decisionInput(data, pos) {
         explosions.explode(data, pos);
       } else if (canTerminal(data, pos, dir)) {
         morphyTerminal(data, pos, dir);
+      } else if (canExit(data, pos, dir)) {
+        morphyExit(data, pos);
       } else {
         return false;
       }
@@ -227,6 +229,13 @@ function morphyTerminal(data, pos, dir) {
   tile.terminal = 1;
   data.terminal = 1;
   tile.nextDecision = decisionInput;  
+}
+
+function morphyExit(data, pos) {
+  const tile = data.tiles[pos];
+
+  tile.exiting = 1;
+  anim.fadeToView(data, 'MENU', 1000 - 240, 1);
 }
 
 function morphyPush(data, pos, dir) {
@@ -674,6 +683,22 @@ function canRoundClash(data, pos, dir) {
     tile.moving > 1;
 }
 
+function canExit(data, pos, dir) {
+  const rows = data.mapWidth;
+  const cols = data.mapHeight;
+  const mapLength = rows * cols;
+
+  const neighbor = posNeighbor(pos, dir);
+
+
+  if (!isLegitNeighbor(data, pos, dir, neighbor)) {
+        return false;
+  }
+
+  const tile = data.tiles[neighbor];
+  return tile.role === 'EXIT';
+}
+
 function canGo(data, pos, dir) {
   const rows = data.mapWidth;
   const cols = data.mapHeight;
@@ -689,6 +714,7 @@ function canGo(data, pos, dir) {
   const tile = data.tiles[neighbor];
   return tile.role === 'EMPTY' && !tile.isTrail;
 }
+
 
 function canPort(data, pos, dir) {
   const neighbor = posNeighbor(pos, dir);

@@ -87,8 +87,7 @@ function borders(tss) {
 
 function tiles (tss) {
   const frameIs = [0, 1, 2, 3, 4, 5, 6, 7];
-
-  
+  const frameIsReversed = [7, 6, 5, 4, 3, 2, 1, 0];
   
   const frames = [
     {
@@ -118,7 +117,7 @@ function tiles (tss) {
       "hanged-info-roll-right": [1],
       "hanged-info-roll-left": [7],
       "info-roll-right": frameIs,
-      "info-roll-left": frameIs.reverse() },
+      "info-roll-left": frameIsReversed },
     { infoVanish: frameIs },
     { infoExplode: frameIs },
     { explode: frameIs },
