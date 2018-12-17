@@ -9,7 +9,7 @@ export default function(levelData) {
 
   this.data.levelData = levelData;
 
-  this.data.currentView = 'GAME';
+  // this.data.currentView = 'GAME';
   roles.initGame(this.data);
 
   this.vm = {
@@ -35,7 +35,22 @@ export default function(levelData) {
     const number = util.padZero(levelNo, 3);
     const name = level.title;
 
-    return `${number} ${name}`;
+    let color = 'red';
+
+    if (levelNo === data.levels.current) {
+      color = 'yellow';
+    }
+    if (data.levels.passed.indexOf(levelNo) >= 0) {
+      color = 'green';
+    }
+    if (data.levels.skipped.indexOf(levelNo) >= 0) {
+      color = 'blue';
+    }
+
+    return {
+      text: `${number} ${name}`,
+      color: color
+    };
   };
 
   this.updateMenu = () => {

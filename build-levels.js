@@ -31,10 +31,17 @@ module.exports = function parse(data) {
 (function writeTask() {
 
   fs.readFile("data/levels.dat", (err, data) => {
+    if (err) {
+      throw(err);
+    }
+
     data = levelsParser.parse(data);
 
     fs.writeFile("build/levels.json",
-                 JSON.stringify(data), () => {
+                 JSON.stringify(data), (err) => {
+                   if (err) {
+                     throw(err);
+                   }
                    console.log('done');
                  });
   });

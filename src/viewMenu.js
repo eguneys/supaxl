@@ -36,19 +36,19 @@ export function renderMenu(ctrl, textures) {
                            tileHeight * 0.63);
   appContainer.addChild(messageLine);
 
-  const levelLine0 = pText(ctrl.vm.levelLine0);
+  const levelLine0 = pText(ctrl.vm.levelLine0, 'red');
   levelLine0.width = tileWidth * 0.5;
   levelLine0.position.set(tileWidth * 0.45,
                           tileHeight * 0.78);
   appContainer.addChild(levelLine0);
 
-  const levelLine1 = pText(ctrl.vm.levelLine0, 'green');
+  const levelLine1 = pText(ctrl.vm.levelLine1, 'green');
   levelLine1.width = tileWidth * 0.5;
   levelLine1.position.set(tileWidth * 0.45,
                           tileHeight * 0.82);
   appContainer.addChild(levelLine1);
 
-  const levelLine2 = pText(ctrl.vm.levelLine0, 'yellow');
+  const levelLine2 = pText(ctrl.vm.levelLine2, 'yellow');
   levelLine2.width = tileWidth * 0.5;
   levelLine2.position.set(tileWidth * 0.45,
                           tileHeight * 0.86);
@@ -68,9 +68,13 @@ export function renderMenu(ctrl, textures) {
   const update = () => {
     pointer.update();
 
-    levelLine0.text = ctrl.vm.levelLine0;
-    levelLine1.text = ctrl.vm.levelLine1;
-    levelLine2.text = ctrl.vm.levelLine2;
+    levelLine0.text = ctrl.vm.levelLine0.text;
+    levelLine1.text = ctrl.vm.levelLine1.text;
+    levelLine2.text = ctrl.vm.levelLine2.text;
+
+    levelLine0.style.fill = ctrl.vm.levelLine0.color;
+    levelLine1.style.fill = ctrl.vm.levelLine1.color;
+    levelLine2.style.fill = ctrl.vm.levelLine2.color;
   };
 
   appContainer.interactive = true;

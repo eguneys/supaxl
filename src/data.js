@@ -25,7 +25,12 @@ export {
 export default function(cfg) {
   var defaults = {
     // MENU
-    selectedLevel: 15,
+    selectedLevel: 1,
+    levels: {
+      passed: [],
+      skipped: [],
+      current: 1
+    },
     // GAME
     updateDuration: UPDATE_DURATION,
     lastUpdateTime: 0,
