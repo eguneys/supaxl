@@ -33,8 +33,10 @@ export function asprite(textures, duration) {
 
 class AnimatedSprite extends PIXI.Sprite {
 
-  constructor(textures, duration = 1000) {
+  constructor(textures, duration = 1000, loop = true) {
     super(textures[0]);
+
+    this.loop = loop;
 
     this._textures = textures;
 
@@ -45,23 +47,41 @@ class AnimatedSprite extends PIXI.Sprite {
 
   update() {
 
+    if (!this.playing) {
+      return;
+    }
+
     let now = Date.now(),
         lastTime = this.lastTime,
         elapsed = (now - lastTime) / this.duration;
 
     if (elapsed >= 1) {
-      this.lastTime = now;
-      elapsed = 0;
+      if (this.loop) {
+        this.lastTime = now;
+      }
+      elapsed = 0.9;
     }
 
     this.frame = Math.floor(elapsed * this._textures.length);
     this._texture = this._textures[this.frame];
   }
 
-  setTextures(textures, duration, lastTime) {
+  setTextures(textures, duration, loop, lastTime) {
     if (this._textures[0] === textures[0]) {
       return false;
     }
+
+    this.loop = loop;
+
+    // let now = Date.now(),
+    //     lastTime2 = this.lastTime,
+    //     elapsed = (now - lastTime2) / this.duration;
+    // if (elapsed > 1) {
+    //   lastTime = Date.now();
+    // }
+    lastTime = Date.now();
+
+    this.playing = true;
 
     this._textures = textures;
 

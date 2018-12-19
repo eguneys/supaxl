@@ -22,6 +22,7 @@ function tTextures(textures, tile) {
 
   let texture = textures[frame];
   let duration = durations[frame] || 1000;
+  let loop = (loops[frame]===false)?false:true;
 
   if (!texture) {
     throw 'no texture for tile ' + tile;
@@ -29,9 +30,18 @@ function tTextures(textures, tile) {
 
   return {
     texture,
-    duration
+    duration,
+    loop
   };
 }
+
+const loops = {
+  infoExplode: false,
+  explode: false,
+  diskVanish: false,
+  vanish: false,
+  baseVanish: false
+};
 
 const durations = {
   "sci-up": 240,
@@ -124,7 +134,6 @@ const frames = {
   WALL: 'wall',
   FLOPPY_RED: (tile) => {
     if (tile.vanishing > 0) {
-      console.log('here');
       return 'reddiskVanish';
     }
     return 'reddisk';
@@ -194,8 +203,9 @@ export function renderWrap(ctrl, textures) {
 
     let tile = tiles[tileKey],
         { texture,
-          duration } = tTextures(textures, tile),
-        sprite = asprite(texture, duration);
+          duration,
+          loop } = tTextures(textures, tile),
+        sprite = asprite(texture, duration, loop);
 
     sprites[pos2key(pos)] = sprite;
 
@@ -260,10 +270,10 @@ export function renderWrap(ctrl, textures) {
           sprite = sprites[pos2key(pos)];
 
       let { texture,
-            duration } = tTextures(textures, tile);
+            duration, loop } = tTextures(textures, tile);
 
       let newTexture =
-      sprite.setTextures(texture, duration, lastByTile[tileKey]);
+          sprite.setTextures(texture, duration, loop, lastByTile[tileKey]);
 
       sprite.position.set(pos[0] * 32,
                           pos[1] * 32);

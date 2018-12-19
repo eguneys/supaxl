@@ -275,7 +275,7 @@ function morphyExit(data, pos) {
     data.selectedLevel++;
   }
 
-  anim.fadeToView(data, 'MENU', 1000 - 240, 1);
+  anim.fadeToView(data, 'MENU', 1000, 1);
 }
 
 function morphyVomit(data, pos) {
