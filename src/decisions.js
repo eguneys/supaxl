@@ -147,6 +147,8 @@ function decisionInput(data, pos) {
         } else {
           return false;
         }
+      } else if (canEat(data, pos, dir)) {
+        morphyEatMove(data, pos, dir);
       } else if (canGo(data, pos, dir)) {
         morphyMove(data, pos, dir);
       } else if (canPort(data, pos, dir)) {
@@ -161,8 +163,6 @@ function decisionInput(data, pos) {
         } else {
           morphyPush(data, pos, dir);
         }
-      } else if (canEat(data, pos, dir)) {
-        morphyEatMove(data, pos, dir);
       } else if (canRoundClash(data, pos, dir)) {
         explosions.explode(data, pos);
       } else if (canTerminal(data, pos, dir)) {
@@ -178,6 +178,10 @@ function decisionInput(data, pos) {
   });
 
   if (!handled) {
+    if (canFall(data, pos)) {
+      handled = true;
+      morphyFall(data, pos);
+    }
     if (inputs[space]) {
       if (canVomit(data, pos)) {
         handled = true;
@@ -196,6 +200,14 @@ function decisionInput(data, pos) {
 
 function decisionMurphyVomit2(data, pos) {
   morphyVomit2(data, pos);
+}
+
+function decisionMurphyFall2(data, pos) {
+  morphyFall2(data, pos);
+}
+
+function decisionMurphyFall(data, pos) {
+  morphyFall(data, pos);
 }
 
 function decisionMurphyMove2(data, pos) {
@@ -359,6 +371,30 @@ function morphyVomit2(data, pos) {
 
   tile.vomiting++;
   tile.nextDecision = decisionInput;
+}
+
+function morphyFall(data, pos) {
+  const tile = data.tiles[pos];
+
+  if (canGo(data, pos, 'down')) {
+
+    morphyMoveBase(data, pos, 'down');
+    setMorphyFace(tile, 'down');
+    tile.pushing = 0;
+    tile.terminal = 0;
+    tile.falling = 1;
+    tile.moving = 1;
+    tile.nextDecision = decisionMurphyFall2;
+  } else {
+    tile.nextDecision = decisionInput;
+  }
+}
+
+function morphyFall2(data, pos) {
+  const tile = data.tiles[pos];
+
+  tile.moving = 2;
+  tile.nextDecision = decisionMurphyFall;
 }
 
 function morphyMove2(data, pos) {
@@ -810,7 +846,6 @@ function canGo(data, pos, dir) {
   const mapLength = rows * cols;
 
   const neighbor = posNeighbor(pos, dir);
-
 
   if (!isLegitNeighbor(data, pos, dir, neighbor)) {
         return false;
