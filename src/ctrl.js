@@ -25,7 +25,7 @@ export default function(levelData) {
   this.levelLine = (levelNo) => {
     const data = this.data;
 
-    const levelIndex = levelNo - 1;
+    const levelIndex = levelNo;
     if (levelIndex < 0 || levelIndex >= data.levelData.levels.length) {
       return '';
     }

@@ -48,6 +48,23 @@ export function explode(data, pos) {
 
 }
 
+export function decisionExplodeWait(data, pos) {
+  const tile = data.tiles[pos];
+
+  tile.explosionWait = 0;
+  tile.nextDecision = decisionExplodeWait2;
+}
+
+function decisionExplodeWait2(data, pos) {
+  const tile = data.tiles[pos];
+
+  if (tile.explosionWait > 10) {
+    tile.nextDecision = explode;
+  }
+
+  tile.explosionWait++;
+}
+
 function decisionExplode2(data, pos) {
   const tile = data.tiles[pos];
 

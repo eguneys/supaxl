@@ -9,11 +9,20 @@ import { bounds } from './bounds';
 
 const { MAP_HEIGHT, MAP_WIDTH } = Constants;
 
-function emptyTile(data, pos) {
+function emptyTile(data, pos, toPos) {
   if (data.tiles[pos].role === 'INFOTRON') {
     data.infotronsNeeded--;
   }
-  data.tiles[pos] = levels.makeRole(0);
+
+  if (toPos && data.tiles[toPos].vomitted) {
+    data.tiles[pos] = levels.makeRole(0x28);
+    data.tiles[pos].nextDecision = explosions.decisionExplodeWait;
+
+    data.tiles[toPos].vomitted = false;
+    data.tiles[toPos].bombs--;
+  } else {
+    data.tiles[pos] = levels.makeRole(0);
+  }
 }
 
 /* // vanish 1
@@ -44,7 +53,7 @@ function vanish2(data, pos) {
 }
 
 function vanishClear(data, pos) {
-  // const tile = data.tiles[pos];
+  const tile = data.tiles[pos];
   // tile.vanishing = 0;
   // delete tile.nextDecision;
   emptyTile(data, pos);
@@ -125,7 +134,8 @@ function decisionInput(data, pos) {
   if (inputs[escape]) {
     // explode
     // transition
-    anim.fadeToView(data, 'MENU', 0, 1);
+    // anim.fadeToView(data, 'MENU', 0, 1);
+    explosions.explode(data, pos);
   }
 
   let handled =
@@ -168,8 +178,24 @@ function decisionInput(data, pos) {
   });
 
   if (!handled) {
+    if (inputs[space]) {
+      if (canVomit(data, pos)) {
+        handled = true;
+        morphyVomit(data, pos);
+      } else if (canBeginVomit(data, pos)) {
+        handled = true;
+        morphyBeginVomit(data, pos);
+      }
+    }
+  }
+
+  if (!handled) {
     morphyStand(data, pos);
   }
+}
+
+function decisionMurphyVomit2(data, pos) {
+  morphyVomit2(data, pos);
 }
 
 function decisionMurphyMove2(data, pos) {
@@ -193,12 +219,19 @@ function morphyStand(data, pos) {
 
   tile.pushing = 0;
   tile.terminal = 0;
+  tile.vomiting = 0;
+
   tile.nextDecision = decisionInput;
 }
 
 function morphyMoveBase(data, pos, facing, nextPos) {
   const dir = Move[facing];
   nextPos = nextPos || (pos + dir.v);
+
+  
+  const eatPos = posNeighbor(pos, facing);
+  const eatRole = data.tiles[eatPos].role;
+  emptyTile(data, eatPos, pos);
 
   moveChar(data, pos, facing, nextPos);
 
@@ -235,7 +268,28 @@ function morphyExit(data, pos) {
   const tile = data.tiles[pos];
 
   tile.exiting = 1;
+
+  data.levels.passed.push(data.selectedLevel);
+  if (data.levels.skipped.indexOf(data.selectedLevel) === -1) {
+    data.levels.current++;
+    data.selectedLevel++;
+  }
+
   anim.fadeToView(data, 'MENU', 1000 - 240, 1);
+}
+
+function morphyVomit(data, pos) {
+  const tile = data.tiles[pos];
+
+  tile.vomiting = 0;
+  tile.vomitted = true;
+}
+
+function morphyBeginVomit(data, pos) {
+  const tile = data.tiles[pos];
+
+  tile.vomiting++;
+  tile.nextDecision = decisionMurphyVomit2;
 }
 
 function morphyPush(data, pos, dir) {
@@ -266,7 +320,11 @@ function morphyEatMove(data, pos, dir) {
   const eatPos = posNeighbor(pos, dir);
   const eatRole = data.tiles[eatPos].role;
 
-  emptyTile(data, eatPos);
+  // emptyTile(data, eatPos, pos);
+
+  if (eatRole === 'FLOPPY_RED') {
+    tile.bombs++;
+  }
 
   morphyMoveBase(data, pos, dir);
 
@@ -283,6 +341,10 @@ function morphySnap(data, pos, dir) {
   const snapPos = posNeighbor(pos, dir);
   const snapTile = data.tiles[snapPos];
 
+  if (snapTile.role === 'FLOPPY_RED') {
+    tile.bombs++;
+  }
+
   vanish1(data, snapPos);
 
   setMorphyFace(tile, dir);
@@ -290,6 +352,13 @@ function morphySnap(data, pos, dir) {
   tile.snapping = 1;
   tile.pushing = 0;
   tile.nextDecision = decisionMurphySnap2;
+}
+
+function morphyVomit2(data, pos) {
+  const tile = data.tiles[pos];
+
+  tile.vomiting++;
+  tile.nextDecision = decisionInput;
 }
 
 function morphyMove2(data, pos) {
@@ -649,6 +718,22 @@ function isMurphy(data, pos, dir) {
   return tile.role === 'MURPHY';
 }
 
+export function canVomit(data, pos) {
+  const tile = data.tiles[pos];
+
+  if (tile.vomiting > 18) {
+    return true;
+  }
+
+  return false;
+}
+
+export function canBeginVomit(data, pos) {
+  const tile = data.tiles[pos];
+  
+  return tile.bombs > 0;
+}
+
 export function canExplode(data, pos, dir) {
   const rows = data.mapWidth;
   const cols = data.mapHeight;
@@ -696,15 +781,27 @@ function canExit(data, pos, dir) {
   const cols = data.mapHeight;
   const mapLength = rows * cols;
 
-  const neighbor = posNeighbor(pos, dir);
+  const tile = data.tiles[pos];
 
+  const neighbor = posNeighbor(pos, dir);
+  const exitTile = data.tiles[neighbor];
 
   if (!isLegitNeighbor(data, pos, dir, neighbor)) {
         return false;
   }
 
-  const tile = data.tiles[neighbor];
-  return tile.role === 'EXIT';
+  if (tile.exiting) {
+    return false;
+  }
+
+  if (data.infotronsNeeded !== 0) {
+    return false;
+  }
+
+  const levelIndex = data.selectedLevel;
+  const levelData = data.levelData.levels[levelIndex];
+
+  return exitTile.role === 'EXIT';
 }
 
 function canGo(data, pos, dir) {

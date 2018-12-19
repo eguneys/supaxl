@@ -90,7 +90,7 @@ export function renderMenu(ctrl, textures) {
 
 
   function levelListUp(data) {
-    data.selectedLevel = Math.max(1, data.selectedLevel - 1);
+    data.selectedLevel = Math.max(0, data.selectedLevel - 1);
   }
 
   function levelListDown(data) {

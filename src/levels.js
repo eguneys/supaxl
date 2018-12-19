@@ -43,7 +43,8 @@ const RoleCode = {
   0x24: 'HARDWARE9',
   0x25: 'HARDWARE10',
   0x26: 'CHIP_TOP',
-  0x27: 'CHIP_BOTTOM'
+  0x27: 'CHIP_BOTTOM',
+  0x28: 'FLOPPY_RED_EATEN'
 };
 
 
@@ -104,7 +105,9 @@ const Role = {
   MURPHY: {
     facingHorizontal: 'left',
     facing: 'left',
+    bombs: 0,
     moving: 0,
+    vomiting: 0,
     explodable: true,
     chainExplode: true,
     decision: 'decisionInput'
@@ -141,6 +144,11 @@ const Role = {
     explodable: true,
     nonRound: true,
     decision: 'decisionFall'
+  },
+  FLOPPY_RED: {
+    eatable: true
+  },
+  FLOPPY_RED_EATEN: {
   },
   WALL: {nonexplodable:true},
   HARDWARE1: {nonexplodable:true},

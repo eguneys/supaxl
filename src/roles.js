@@ -40,7 +40,7 @@ function clearTrail(data, pos) {
 
 function initGame(data) {
   const levelNo = data.selectedLevel;
-  const level = data.levelData.levels[levelNo - 1];
+  const level = data.levelData.levels[levelNo];
 
   data.levelNo = levelNo;
   data.levelTitle = level.title;

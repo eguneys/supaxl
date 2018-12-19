@@ -102,6 +102,10 @@ const frames = {
       return ['murphy', 'snap', tile.facing].join('-');
     } else if (tile.exiting > 0) {
       return 'murphyVanish';
+    } else if (tile.vomiting > 12) {
+      return 'murphySick';
+    } else if (tile.vomitted) {
+      return 'reddisk';
     }
     return 'murphy';
   },
@@ -118,7 +122,13 @@ const frames = {
   EMPTY: 'empty',
   EXIT: 'exit',
   WALL: 'wall',
-  FLOPPY_RED: 'reddisk',
+  FLOPPY_RED: (tile) => {
+    if (tile.vanishing > 0) {
+      console.log('here');
+      return 'reddiskVanish';
+    }
+    return 'reddisk';
+  },
   FLOPPY_ORANGE: 'orangedisk',
   FLOPPY_YELLOW: 'yellowdisk',
   CHIP: 'chip',
