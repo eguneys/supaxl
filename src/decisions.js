@@ -337,12 +337,18 @@ function morphyEatMove(data, pos, dir) {
   const tile = data.tiles[pos];
 
   const eatPos = posNeighbor(pos, dir);
-  const eatRole = data.tiles[eatPos].role;
+  const eatTile = data.tiles[eatPos];
+  const eatRole = eatTile.role;
 
   // emptyTile(data, eatPos, pos);
 
   if (eatRole === 'FLOPPY_RED') {
     tile.bombs++;
+  }
+
+  if (eatRole === 'BUG' && eatTile.active > 0) {
+    explosions.explode(data, pos);
+    return;
   }
 
   morphyMoveBase(data, pos, dir);

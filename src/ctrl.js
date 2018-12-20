@@ -22,6 +22,10 @@ export default function(levelData) {
     selectedLevel: this.data.levels.current
   });
 
+  // debug
+  configure(this.data, { selectedLevel: 8 });
+
+
   this.data.levelData = levelData;
 
   // this.data.currentView = 'GAME';
