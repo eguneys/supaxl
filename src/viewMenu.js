@@ -61,6 +61,13 @@ export function renderMenu(ctrl, textures) {
   okButton.alpha = 0;
   appContainer.addChild(okButton);
 
+  const skipButton = sprite(textures['button_up']);
+  setDims(skipButton, 
+          tileWidth * 0.22, tileHeight * 0.05,
+          tileWidth * 0.1, tileHeight * 0.12);
+  skipButton.alpha = 0;
+  appContainer.addChild(skipButton);
+
   const pointer = asprite(textures['pointer']);
   setDims(pointer, tileHeight * 0.05, tileHeight * 0.05);
   appContainer.addChild(pointer);
@@ -119,6 +126,11 @@ export function renderMenu(ctrl, textures) {
   okButton.interactive = true;
   okButton.on('mousedown', function() {
     ctrl.levelSelect();
+  });
+
+  skipButton.interactive = true;
+  skipButton.on('mousedown', function() {
+    ctrl.skipLevel();
   });
 
   return {

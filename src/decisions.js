@@ -288,8 +288,13 @@ function morphyExit(data, pos) {
   data.levels.passed.push(data.selectedLevel);
   if (data.levels.skipped.indexOf(data.selectedLevel) === -1) {
     data.levels.current++;
-    data.selectedLevel++;
+  } else {
+    data.levels.skipped
+      .splice(data.levels.skipped
+              .indexOf(data.selectedLevel), 1);
+
   }
+  data.selectedLevel = data.levels.current;
 
   window.localStorage
     .setItem('levels', JSON.stringify(data.levels));

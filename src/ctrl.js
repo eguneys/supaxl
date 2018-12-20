@@ -23,7 +23,7 @@ export default function(levelData) {
   });
 
   // debug
-  configure(this.data, { selectedLevel: 15 });
+  // configure(this.data, { selectedLevel: 15 });
 
 
   this.data.levelData = levelData;
@@ -33,6 +33,25 @@ export default function(levelData) {
 
   this.vm = {
     messageLine: WELCOME_MSG
+  };
+
+  this.skipLevel = () => {
+    const data = this.data;
+
+    if (data.levels.skipped.length >= 2) {
+      return;
+    }
+
+    if (data.selectedLevel !== data.levels.current) {
+      return;
+    }
+
+    data.levels.skipped.push(data.selectedLevel);
+    if (data.selectedLevel === data.levels.current) {
+      data.levels.current++;
+    }
+    data.selectedLevel++;
+
   };
 
   this.levelSelect = (delay = 1000) => {
