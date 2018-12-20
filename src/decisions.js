@@ -820,8 +820,9 @@ function canRoundClash(data, pos, dir) {
   }
 
   const tile = data.tiles[neighbor];
+  console.log(tile);
   return tile.falling > 1 ||
-    tile.rolling > 1  ||
+    // tile.rolling > 1  ||
     tile.moving > 1;
 }
 

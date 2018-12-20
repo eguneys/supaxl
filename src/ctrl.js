@@ -23,7 +23,7 @@ export default function(levelData) {
   });
 
   // debug
-  // configure(this.data, { selectedLevel: 8 });
+  configure(this.data, { selectedLevel: 15 });
 
 
   this.data.levelData = levelData;
