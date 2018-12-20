@@ -25,7 +25,7 @@ export {
 export default function(cfg) {
   var defaults = {
     // MENU
-    selectedLevel: 20,
+    selectedLevel: 6,
     levels: {
       passed: [],
       skipped: [],

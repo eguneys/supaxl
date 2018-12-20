@@ -138,6 +138,7 @@ function decisionInput(data, pos) {
     // transition
     // anim.fadeToView(data, 'MENU', 0, 1);
     explosions.explode(data, pos);
+    return;
   }
 
   let handled =

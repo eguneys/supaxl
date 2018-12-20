@@ -38,7 +38,7 @@ export function explode(data, pos) {
       if (etile.nonexplodable) {
         return;
       }
-
+      console.log(etile.role, etile.prevRole);
       etile.prevRole = etile.prevRole || etile.role;
       etile.cause = tile.prevRole;
       etile.role = 'EXPLOSION';
@@ -87,6 +87,8 @@ function decisionExplode2(data, pos) {
 
 function decisionExplodeEnd(data, pos) {
   const tile = data.tiles[pos];
+
+  delete tile.prevRole;
 
   if (tile.cause === 'ELECTRON') {
     tile.role = 'INFOTRON';
