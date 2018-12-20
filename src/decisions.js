@@ -688,15 +688,15 @@ function decisionTurn(data, pos) {
   const dirAhead = tile.facing;
   const dirRight = ofRight(tile.facing);
 
-  if (isMurphy(data, pos, dirAhead)) {
-    const posAhead = posNeighbor(pos, dirAhead);
-    explosions.explode(data, posAhead);
-  } else if (canGo(data, pos, dirLeft)) {
+  if (canGo(data, pos, dirLeft)) {
     turn(data, pos, dirLeft);
   } else if (canGo(data, pos, dirAhead)) {
     move1(data, pos);
   } else if (canGo(data, pos, dirRight)) {
     turn(data, pos, dirRight);
+  } else if (isMurphy(data, pos, dirAhead)) {
+    const posAhead = posNeighbor(pos, dirAhead);
+    explosions.explode(data, posAhead);
   } else {
     turn(data, pos, dirLeft);
   }

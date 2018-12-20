@@ -155,6 +155,7 @@ const Role = {
     chainExplode: true,
     explodable: true,
     nonRound: true,
+    pushable: true,
     decision: 'decisionFall'
   },
   FLOPPY_RED: {
