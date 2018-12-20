@@ -126,7 +126,6 @@ function decisionInput(data, pos) {
   const space = 'space';
   const enter = 'enter';
   const escape = 'escape';
-
   const currentLevel = data.levelData.levels[data.selectedLevel];
 
   if (inputs[enter]) {

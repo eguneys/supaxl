@@ -118,7 +118,7 @@ const Role = {
   PORT_LEFT: {
     portable: {left: true }
   },
-  PORT_TOP: {
+  PORT_UP: {
     portable: { up: true }
   },
   PORT_RIGHT: {
@@ -126,6 +126,18 @@ const Role = {
   },
   PORT_DOWN: {
     portable: { down: true }
+  },
+  GPORT_RIGHT: {
+    portable: { right: true }
+  },
+  GPORT_DOWN: {
+    portable: { down: true }
+  },
+  GPORT_LEFT: {
+    portable: { left: true }
+  },
+  GPORT_UP: {
+    portable: { up: true }
   },
   PORT_HORIZONTAL: {
     portable: {left: true, right: true }

@@ -213,5 +213,7 @@ function tiles (tss) {
 
   }
 
+  tss['portUp'][0].rotate = 4;
+
   return tss;
 }
