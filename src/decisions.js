@@ -127,6 +127,8 @@ function decisionInput(data, pos) {
   const enter = 'enter';
   const escape = 'escape';
 
+  const currentLevel = data.levelData.levels[data.selectedLevel];
+
   if (inputs[enter]) {
     toggleHUD(data);
   }
@@ -150,7 +152,12 @@ function decisionInput(data, pos) {
       } else if (canEat(data, pos, dir)) {
         morphyEatMove(data, pos, dir);
       } else if (canGo(data, pos, dir)) {
-        morphyMove(data, pos, dir);
+
+        if (currentLevel.gravity && canFall(data, pos)) {
+          morphyFall(data, pos);
+        } else {
+          morphyMove(data, pos, dir);
+       }
       } else if (canPort(data, pos, dir)) {
         const portPos = posNeighbor(pos, dir);
         const nextPos = posNeighbor(portPos, dir);
@@ -178,7 +185,7 @@ function decisionInput(data, pos) {
   });
 
   if (!handled) {
-    if (canFall(data, pos)) {
+    if (currentLevel.gravity && canFall(data, pos)) {
       handled = true;
       morphyFall(data, pos);
     }
