@@ -49,6 +49,8 @@ function initGame(data) {
 
   data.terminal = 0;
 
+  console.log(level);
+
   data.tiles = levels.read(level.data);
   // data.tiles = levels.read(levels.initial);
   // data.tiles = levels.read(levels.spriteTest);

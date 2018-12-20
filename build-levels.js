@@ -8,12 +8,12 @@ const levelParser = new Parser()
           length: 1440
         })
         .skip(4)
-        .int8('gravity')
-        .int8('th')
+        .uint8('gravity')
+        .uint8('th')
         .string('title', { length: 23 })
-        .int8('freezeZonks')
-        .int8('infotronsNeeded')
-        .int8('gravityPorts')
+        .uint8('freezeZonks')
+        .uint8('infotronsNeeded')
+        .uint8('gravityPorts')
         .skip(60)
         .skip(4);
 

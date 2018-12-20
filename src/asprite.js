@@ -46,11 +46,6 @@ class AnimatedSprite extends PIXI.Sprite {
   }
 
   update() {
-
-    if (!this.playing) {
-      return;
-    }
-
     let now = Date.now(),
         lastTime = this.lastTime,
         elapsed = (now - lastTime) / this.duration;
@@ -80,8 +75,6 @@ class AnimatedSprite extends PIXI.Sprite {
     //   lastTime = Date.now();
     // }
     lastTime = Date.now();
-
-    this.playing = true;
 
     this._textures = textures;
 

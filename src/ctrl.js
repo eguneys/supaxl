@@ -1,4 +1,5 @@
 import data from './data';
+import { configure } from './config';
 import * as roles from './roles';
 import * as util from './util';
 import * as anim from './anim';
@@ -7,10 +8,24 @@ export default function(levelData) {
   const WELCOME_MSG = '  WELCOME TO SUPAPLEX';
   this.data = data();
 
+  const configLevels = window.localStorage.getItem('levels');
+  if (configLevels) {
+    try {
+      configure(this.data, {
+        levels: JSON.parse(configLevels)
+      });
+    } catch (e) {
+      
+    }
+  }
+  configure(this.data, {
+    selectedLevel: this.data.levels.current
+  });
+
   this.data.levelData = levelData;
 
   // this.data.currentView = 'GAME';
-  roles.initGame(this.data);
+  // roles.initGame(this.data);
 
   this.vm = {
     messageLine: WELCOME_MSG

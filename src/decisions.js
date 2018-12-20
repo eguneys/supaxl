@@ -291,6 +291,9 @@ function morphyExit(data, pos) {
     data.selectedLevel++;
   }
 
+  window.localStorage
+    .setItem('levels', JSON.stringify(data.levels));
+
   anim.fadeToView(data, 'MENU', 1000, 1);
 }
 
