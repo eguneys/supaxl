@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 //const DEBUG = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  entry: ['./src/boot.js'],
+  entry: ['./src/index.js'],
   devServer: {
     hot: true,
     inline: true,
@@ -14,6 +14,9 @@ module.exports = {
   },
   performance: {
     hints: false
+  },
+  output: {
+    library: 'Supaplex'
   },
   target: 'web',
   devtool: 'source-map',
@@ -40,6 +43,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      inject: 'head',
       template: 'src/index.html'
     }),
     new webpack.HotModuleReplacementPlugin({})
