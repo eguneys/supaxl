@@ -248,10 +248,7 @@ function morphyMoveBase(data, pos, facing, nextPos) {
   const dir = Move[facing];
   nextPos = nextPos || (pos + dir.v);
 
-  
-  const eatPos = posNeighbor(pos, facing);
-  const eatRole = data.tiles[eatPos].role;
-  emptyTile(data, eatPos, pos);
+  emptyTile(data, nextPos, pos);
 
   moveChar(data, pos, facing, nextPos);
 

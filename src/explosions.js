@@ -38,7 +38,6 @@ export function explode(data, pos) {
       if (etile.nonexplodable) {
         return;
       }
-      console.log(etile.role, etile.prevRole);
       etile.prevRole = etile.prevRole || etile.role;
       etile.cause = tile.prevRole;
       etile.role = 'EXPLOSION';
